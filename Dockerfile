@@ -25,8 +25,10 @@ WORKDIR /dist
 #copy the binary into the destination
 RUN cp /build/main .
 
-#Expose the Go app's port
-EXPOSE 3000
+# build a small image
+FROM scratch
 
-# Run this command when the conatiner starts
-CMD ["/dist/main"]
+COPY --from=builder /dist/main /
+
+# Command to run
+ENTRYPOINT ["main"]
